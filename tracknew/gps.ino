@@ -1,23 +1,21 @@
 void GPS_action() {
   if ( isGPShour ) {
     LoRa.sleep();
-    digitalWrite(GPS_EN_pin, HIGH);                                   // Accendo il GPS
+    gpsON();                        // Accendo il GPS
     getGPS();
     if (gps.location.isValid()) {
       setTime();
       delay(10);
       if (gps.satellites.value() >= num_sats_min ) {
         dataToPack(gps.location.lat(), gps.location.lng());
-        digitalWrite(GPS_EN_pin, LOW);
-        isGPShour = false;
+        gpsOFF();
         TurnOFF();
       }
       else {
         if (act_time.minute >= minute_fix_sat) {
           Serial.println(F("Troppo tempo per ottenere il numero di satelliti che voglio."));
           dataToPack(gps.location.lat(), gps.location.lng());
-          digitalWrite(GPS_EN_pin, LOW);
-          isGPShour = false;
+          gpsOFF();
           TurnOFF();
         }
       }
@@ -27,8 +25,7 @@ void GPS_action() {
         Serial.println(F("Troppo tempo per fixare la posizione."));
         dataToPack(NO_FIX_POS, NO_FIX_POS);
         Serial.print(pacchetto.lat_1);
-        digitalWrite(GPS_EN_pin, LOW);
-        isGPShour = false;
+        gpsOFF();
         TurnOFF();
       }
     }
@@ -47,6 +44,15 @@ void getGPS() {
     isGPShour = false;
     TurnOFF();
   }
+}
+
+void gpsON(){
+  digitalWrite(GPS_EN_pin, HIGH);  
+}
+
+void gpsOFF(){
+  digitalWrite(GPS_EN_pin, LOW);
+  isGPShour = false;
 }
 
 void dataToPack(float lat_f, float lon_f) {
