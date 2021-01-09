@@ -3,7 +3,7 @@ void GPS_action() {
     LoRa.sleep();
     gpsON();                        // Accendo il GPS
     getGPS();
-    if (gps.location.isValid()) {
+    if (gps.location.isUpdated()) {
       setTime();
       delay(10);
       if (gps.satellites.value() >= num_sats_min ) {
