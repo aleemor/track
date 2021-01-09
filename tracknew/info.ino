@@ -4,10 +4,12 @@ void displayInfo(){
   oraRTC();
   Serial.print(F(" "));
   oraGPS();
-  Serial.print(F(" fixLoc: "));
-  Serial.print(gps.location.isValid());
-  Serial.print(F(" fixTime: "));
-  Serial.print(gps.time.isValid());
+  Serial.print(" CHAR:");
+  Serial.print(gps.charsProcessed());
+  //Serial.print(F(" fixLoc: "));
+  //Serial.print(gps.location.isUpdated());
+  //Serial.print(F(" fixTime: "));
+  //Serial.print(gps.time.isUpdated());
   Serial.print(F(" SAT: "));
   Serial.print(gps.satellites.value());
   Serial.print(F(" LoRa:"));
