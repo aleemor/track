@@ -14,10 +14,13 @@ void clock_initialization() {
 }
 
 void setTime() {                                             // Confronta l'ora del GPS con quella dell'RTC. Se la differenza è maggiore di
-  if ( abs(act_time.minute - gps.time.minute())) {           // un minuto aggiorna l'ora dell' RTC.
-    Serial.println(F("Aggiorno orario!!!"));
-    clock.setDateTime(2014, 4, 25, gps.time.hour(), gps.time.minute(), gps.time.second());
-    act_time = clock.getDateTime();
-    delay(10);
+  if (aggiornaOra){
+    if ( abs(act_time.minute - gps.time.minute())) {           // un minuto aggiorna l'ora dell' RTC.
+      Serial.println(F("Aggiorno orario!!!"));
+      clock.setDateTime(2014, 4, 25, gps.time.hour(), gps.time.minute(), gps.time.second());
+      act_time = clock.getDateTime();
+      interruttori(); 
+      delay(10);
+    }
   }
 }
