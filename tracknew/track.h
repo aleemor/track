@@ -23,6 +23,7 @@ bool isLORAhour;                               // isGPStime = true se è ora di 
 bool LORA_interval;                            // timeOfSendig = true se sono nell'intervallo di visibilità
 
 #define preamb 77
+#define FREQUENZA_INVIO  5000                  // In millisecondi 
 
 #define num_sats_min  5                        // Numero di satelliti che voglio per prendere la posizione
 #define wake_minute  0                         // Minuto dell'ora in cui sveglio Arduino.
@@ -32,8 +33,12 @@ bool LORA_interval;                            // timeOfSendig = true se sono ne
 #define  LORA_start_hour  9                    // Intervallo invio pacchetto: 
 #define  LORA_stop_hour  9                    // ( ORA_LORA_1 : MINUTE_INF ---- ORA_LORA_2 : MINUTE_SUP )
 #define  LORA_start_minute 10                 
-#define  LORA_stop_minute  30                   
-#define FREQUENZA_INVIO  5000                  // In millisecondi 
+#define  LORA_stop_minute  30  
+
+#define aggiornaOra 1
+#define setStartHour 12
+#define setStartMin  59
+#define setStartSec  55
 
 #define FIX_1  6                              // Ora in cui raccolgo la prima posizione.
 #define FIX_2  21                               // Ora in cui raccolgo la seconda posizione.
