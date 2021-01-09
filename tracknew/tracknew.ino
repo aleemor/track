@@ -31,7 +31,7 @@ void setup() {
   clock_initialization();
   LORA_initialization();
 
-  clock.setDateTime(2016, 9, 30, 1, 59, 55);
+  clock.setDateTime(2016, 9, 30, setStartHour, setStartMin, setStartSec);
   
   delay(1000);
   Serial.println(F("RTC_SLEEP_GPS_LORA"));
@@ -107,11 +107,14 @@ void TurnOFF() {
     //
 
     clock.clearAlarm2();                                              // elimina l'allarme (per evitare ulteriori indesiderati interrupt)
+    act_time = clock.getDateTime();
+    interruttori(); 
   }
 }
 
 void WakeUP() {                                                       // disabilita la modalità sleep
   Serial.println(F("Sveglio"));
+  displayInfo();
   sleep_disable();
   //detachInterrupt(0);
 }
