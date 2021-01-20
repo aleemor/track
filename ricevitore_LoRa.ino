@@ -43,8 +43,8 @@ void loop() {
       memcpy(&pacchetto,buffer_pack,20);
     }
     if (pacchetto.preambolo==preamb){
-      //Serial.write((byte *)&buffer_pack, 20); 
-      displayInfo();
+      Serial.write((byte *)&buffer_pack, 20); 
+      //displayInfo();
     }
   }
 }
