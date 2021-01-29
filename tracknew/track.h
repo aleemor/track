@@ -36,6 +36,8 @@ bool LORA_interval;                            // timeOfSendig = true se sono ne
 #define  LORA_stop_minute  30  
 
 #define aggiornaOra 1
+#define UTC 1
+
 #define setStartHour 12
 #define setStartMin  59
 #define setStartSec  55
