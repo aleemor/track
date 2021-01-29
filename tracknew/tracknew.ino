@@ -109,12 +109,12 @@ void TurnOFF() {
     clock.clearAlarm2();                                              // elimina l'allarme (per evitare ulteriori indesiderati interrupt)
     act_time = clock.getDateTime();
     interruttori(); 
+    displayInfo();
   }
 }
 
 void WakeUP() {                                                       // disabilita la modalità sleep
   Serial.println(F("Sveglio"));
-  displayInfo();
   sleep_disable();
   //detachInterrupt(0);
 }
