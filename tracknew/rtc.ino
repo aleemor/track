@@ -17,7 +17,7 @@ void setTime() {                                             // Confronta l'ora 
   if (aggiornaOra){
     if ( abs(act_time.minute - gps.time.minute())) {           // un minuto aggiorna l'ora dell' RTC.
       Serial.println(F("Aggiorno orario!!!"));
-      clock.setDateTime(2014, 4, 25, gps.time.hour(), gps.time.minute(), gps.time.second());
+      clock.setDateTime(2014, 4, 25, gps.time.hour() + UTC, gps.time.minute(), gps.time.second());
       act_time = clock.getDateTime();
       interruttori(); 
       delay(10);
