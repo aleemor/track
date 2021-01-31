@@ -31,7 +31,7 @@ void LORA_send() {
 }
 
 void  LORA_initialization() {
-  if (!LoRa.begin(915E6)) {                                   // verifico collegamenti LoRa
+  if (!LoRa.begin(frequency)) {                                   // verifico collegamenti LoRa
     Serial.println("Starting LoRa Failed");
     while (1);
   }
