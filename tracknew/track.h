@@ -39,6 +39,7 @@ bool LORA_interval;                            // timeOfSendig = true se sono ne
 #define SF 7                                    // Spreading Factor
 #define BW 125E6                                // Bandwith
 #define codingRateDenominator 5
+#define txPwr 0
 
 #define aggiornaOra 1
 #define UTC 1
