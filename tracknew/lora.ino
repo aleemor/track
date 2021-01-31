@@ -37,6 +37,7 @@ void  LORA_initialization() {
   }
   LoRa.setSpreadingFactor(SF);
   LoRa.setSignalBandwidth(BW);
+  LoRa.setCodingRate4(codingRateDenominator);
   LoRa.setTxPower(0, 1);
 }
 
