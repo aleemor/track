@@ -35,6 +35,7 @@ bool LORA_interval;                            // timeOfSendig = true se sono ne
 #define  LORA_start_minute 10                 
 #define  LORA_stop_minute  30  
 
+#define frequency 915E6
 #define SF 7                                    // Spreading Factor
 #define BW 125E6                                // Bandwith
 #define codingRateDenominator 5
