@@ -38,7 +38,7 @@ void  LORA_initialization() {
   LoRa.setSpreadingFactor(SF);
   LoRa.setSignalBandwidth(BW);
   LoRa.setCodingRate4(codingRateDenominator);
-  LoRa.setTxPower(0, 1);
+  LoRa.setTxPower(txPwr, 1);
 }
 
 void recupera_da_EEPROM() {
