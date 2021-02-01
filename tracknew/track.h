@@ -17,9 +17,10 @@ uint16_t GPS_ROTTO = 55555;                    // Messaggio di errore per GPS ro
 const float NO_FIX_POS = 33.333;               // Messaggio di errore per fix della posizione.
 
 int count_reboot;
+int n_packSent = 0;
 
 bool isGPShour;                                // isGPStime = true se è ora di usare il GPS.
-bool isLORAhour;                               // isGPStime = true se è ora di usare il LoRa.                            inizializzare???
+bool isLORAhour;                               // isGPStime = true se è ora di usare il LoRa.                            
 bool LORA_interval;                            // timeOfSendig = true se sono nell'intervallo di visibilità
 
 #define preamb 77
