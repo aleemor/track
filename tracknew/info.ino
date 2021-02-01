@@ -16,8 +16,10 @@ void displayInfo(){
   Serial.print(isLORAhour);
   Serial.print(F(" GPS:"));
   Serial.print(isGPShour);
-  Serial.print(F(" SEND "));
+  Serial.print(F(" SEND: "));
   Serial.print(LORA_interval);
+  Serial.print(F(" n_packSent: "));
+  Serial.print(n_packSent); 
   Serial.print(" lat_1: ");
   Serial.print(pacchetto.lat_1);
   Serial.print(" lon_1: ");
