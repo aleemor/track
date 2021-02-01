@@ -1,7 +1,7 @@
 void GPS_action() {
   if ( isGPShour ) {
     LoRa.sleep();
-    gpsON();                        // Accendo il GPS
+    gpsON();                        
     getGPS();
     if (gps.location.isUpdated()) {
       setTime();
