@@ -3,7 +3,7 @@ void LORA_action() {
   LoRa.sleep();
   if (LORA_interval) {
     if (millis() >= prev_send + FREQUENZA_INVIO) {
-      pacchetto.batt = analogRead(A0);                                 // aggiungi controllo
+      pacchetto.batt = analogRead(A0);                                 
       pacchetto.sec = millis()/1000;
       pacchetto.preambolo = preamb;
       recupera_da_EEPROM();
@@ -27,11 +27,11 @@ void LORA_send() {
   LoRa.beginPacket();
   LoRa.write((byte *)&pacchetto, sizeof(pacchetto));
   LoRa.endPacket();
-  //LoRa.sleep();
+  n_packSent++;
 }
 
 void  LORA_initialization() {
-  if (!LoRa.begin(frequency)) {                                   // verifico collegamenti LoRa
+  if (!LoRa.begin(frequency)) {                                  
     Serial.println("Starting LoRa Failed");
     while (1);
   }
