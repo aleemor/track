@@ -27,8 +27,6 @@ struct dati{
 
 byte buffer_pack[sizeof(pacchetto)];
 
-int counterLoop=0;
-
 int Rssi;
 uint32_t Snr;
 int packetSize;
@@ -47,15 +45,6 @@ void setup() {
 }
 
 void loop() {
-  counterLoop++;
-  packetSize = LoRa.parsePacket();
-  Serial.print(" packetSize: ");
-  Serial.print(packetSize);
-  Serial.print(" [");
-  Serial.print(counterLoop);  
-  Serial.println("]");  
-  delay(10);
-  
   if (packetSize==sizeof(pacchetto)) {
     while ( LoRa.available() ) {
       for(int i = 0; i<sizeof(pacchetto); i++) {
