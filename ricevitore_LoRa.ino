@@ -6,15 +6,15 @@
 #define preamb 77
 
 #define frequency 915E6
-#define SF 12
 #define BW 125E3
-#define txPwr 0
+#define SF 12
 
 struct dati{ 
-  uint8_t preambolo;
-  uint8_t n_reboot;
-  uint8_t batt;
-  uint8_t h_dop;
+  uint8_t  preambolo;
+  uint8_t  n_reboot;
+  uint8_t  batt;
+  uint8_t  h_dop;
+  uint16_t n_packSent;
   uint16_t sec;
   uint16_t id;      
   uint16_t lat_1;     
@@ -27,9 +27,14 @@ struct dati{
 
 byte buffer_pack[sizeof(pacchetto)];
 
+int counterLoop=0;
+
 int Rssi;
-int Snr;
+uint32_t Snr;
 int packetSize;
+uint16_t n_packReceived = 0;
+uint16_t n_packSent;
+float PDR;
 
 void setup() {
   Serial.begin(serialBaud);
@@ -38,12 +43,19 @@ void setup() {
   LORA_initialization();
 
   delay(1000);
-  Serial.println("Ricevitore LoRa");
   
 }
 
 void loop() {
+  counterLoop++;
   packetSize = LoRa.parsePacket();
+  Serial.print(" packetSize: ");
+  Serial.print(packetSize);
+  Serial.print(" [");
+  Serial.print(counterLoop);  
+  Serial.println("]");  
+  delay(10);
+  
   if (packetSize==sizeof(pacchetto)) {
     while ( LoRa.available() ) {
       for(int i = 0; i<sizeof(pacchetto); i++) {
@@ -51,15 +63,19 @@ void loop() {
       }
       Rssi=LoRa.packetRssi();
       Snr=LoRa.packetSnr();
-      memcpy(&pacchetto,buffer_pack,sizeof(pacchetto));
+      memcpy(&pacchetto,buffer_pack,sizeof(pacchetto));     
     }
     
     if (pacchetto.preambolo==preamb){
-      displayInfo();
+      n_packReceived++;
+      n_packSent=pacchetto.n_packSent;
+      PDR=((float)n_packReceived/n_packSent)*100; 
+      //displayInfo();
       serialWrite();
     }
   }
-  delay(1000);
+  delay(1000); 
+  
 }
 
 void  LORA_initialization() {
@@ -67,9 +83,9 @@ void  LORA_initialization() {
     Serial.println("Starting LoRa Failed");
     while (1);
   }
+
   LoRa.setSpreadingFactor(SF);
   LoRa.setSignalBandwidth(BW);
-  LoRa.setTxPower(txPwr, 1);
 }
 
 void displayInfo() {
@@ -81,6 +97,12 @@ void displayInfo() {
   Serial.print(pacchetto.batt);
   Serial.print(" hdop: ");
   Serial.print(pacchetto.h_dop);
+  Serial.print(" n_packSent: ");
+  Serial.print(pacchetto.n_packSent);  
+  Serial.print(" n_packReceived: ");
+  Serial.print(n_packReceived);
+  Serial.print(" PDR: ");
+  Serial.print(PDR);    
   Serial.print(" sec: ");
   Serial.print(pacchetto.sec);
   Serial.print(" id: ");
@@ -103,8 +125,7 @@ void displayInfo() {
   Serial.print(Rssi);
   Serial.print(" SNR:");
   Serial.print(Snr);
-
-
+  
   Serial.println();
   
 }
@@ -112,5 +133,6 @@ void displayInfo() {
 void serialWrite() {
       Serial.write((byte *)&buffer_pack, sizeof(pacchetto)); 
       Serial.write((byte *)&Rssi,2);
-      Serial.write((byte *)&Snr,2);  
+      Serial.write((byte *)&Snr,4);  
+      Serial.write((byte *)&PDR,4);
   }
