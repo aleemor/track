@@ -3,7 +3,7 @@ void LORA_action() {
   LoRa.sleep();
   if (LORA_interval) {
     if (millis() >= prev_send + FREQUENZA_INVIO) {
-      pacchetto.batt = analogRead(A0);                                 
+      pacchetto.batt = analogRead(A0);                                 // aggiungi controllo
       pacchetto.sec = millis()/1000;
       pacchetto.preambolo = preamb;
       recupera_da_EEPROM();
@@ -14,31 +14,31 @@ void LORA_action() {
   }
   else {
     if ( (act_time.hour == LORA_stop_hour) && (act_time.minute >= LORA_stop_minute) ) {
-      Serial.println(F("Ho fatto, dormo"));
       isLORAhour = false;
       TurnOFF();
     }
   }
-}
+  }
 }
 
 void LORA_send() {
+  n_packSent++;
+  pacchetto.n_packSent=n_packSent;
   Serial.println(F("Invio"));
   LoRa.beginPacket();
   LoRa.write((byte *)&pacchetto, sizeof(pacchetto));
   LoRa.endPacket();
-  n_packSent++;
 }
 
 void  LORA_initialization() {
-  if (!LoRa.begin(frequency)) {                                  
+  if (!LoRa.begin(frequency)) {                                   // verifico collegamenti LoRa
     Serial.println("Starting LoRa Failed");
     while (1);
   }
   LoRa.setSpreadingFactor(SF);
   LoRa.setSignalBandwidth(BW);
   LoRa.setCodingRate4(codingRateDenominator);
-  LoRa.setTxPower(txPwr, 1);
+  LoRa.setTxPower(txPwr);
 }
 
 void recupera_da_EEPROM() {
@@ -48,4 +48,5 @@ void recupera_da_EEPROM() {
   EEPROM.get(6,pacchetto.lon_2);  
   EEPROM.get(8,pacchetto.lat_3);
   EEPROM.get(10,pacchetto.lon_3);
+  EEPROM.get(16,pacchetto.h_dop);
 }
