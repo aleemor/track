@@ -1,80 +1,62 @@
 #include <LoRa.h>
 #include <SPI.h>
 
-#define serialBaud 115200
-
 #define preamb 77
 
-#define frequency 915E6
-#define BW 125E3
-#define SF 12
-
 struct dati{ 
-  uint8_t  preambolo;
-  uint8_t  n_reboot;
-  uint8_t  batt;
-  uint8_t  h_dop;
-  uint16_t n_packSent;
+  uint8_t preambolo;
+  uint8_t n_reboot;
+  uint8_t batt;
+  uint8_t h_dop;
   uint16_t sec;
   uint16_t id;      
-  uint16_t lat_1;     
+  uint16_t lat_1;     // int16_t
   uint16_t lon_1;
-  uint16_t lat_2;     
+  uint16_t lat_2;     // int16_t
   uint16_t lon_2;
-  uint16_t lat_3;     
+  uint16_t lat_3;     // int16_t
   uint16_t lon_3;
 } pacchetto;
 
-byte buffer_pack[sizeof(pacchetto)];
+byte buffer_pack[20];
 
-int Rssi;
-uint32_t Snr;
 int packetSize;
-uint16_t n_packReceived = 0;
-uint16_t n_packSent;
-float PDR;
 
 void setup() {
-  Serial.begin(serialBaud);
+  Serial.begin(115200);
   while (!Serial);
 
   LORA_initialization();
 
   delay(1000);
+  Serial.println("Ricevitore LoRa");
   
 }
 
 void loop() {
-  if (packetSize==sizeof(pacchetto)) {
+  packetSize = LoRa.parsePacket();
+  if (packetSize==20) {
     while ( LoRa.available() ) {
-      for(int i = 0; i<sizeof(pacchetto); i++) {
+      for(int i = 0; i<20; i++) {
         buffer_pack[i] = LoRa.read();
       }
-      Rssi=LoRa.packetRssi();
-      Snr=LoRa.packetSnr();
-      memcpy(&pacchetto,buffer_pack,sizeof(pacchetto));     
+      memcpy(&pacchetto,buffer_pack,20);
     }
-    
     if (pacchetto.preambolo==preamb){
-      n_packReceived++;
-      n_packSent=pacchetto.n_packSent;
-      PDR=((float)n_packReceived/n_packSent)*100; 
-      //displayInfo();
-      serialWrite();
+      //Serial.write((byte *)&buffer_pack, 20); 
+      displayInfo();
     }
   }
-  delay(1000); 
-  
 }
 
 void  LORA_initialization() {
-  if (!LoRa.begin(frequency)) {                                  
+  if (!LoRa.begin(915E6)) {                                   // verifico collegamenti LoRa
     Serial.println("Starting LoRa Failed");
     while (1);
   }
-
-  LoRa.setSpreadingFactor(SF);
-  LoRa.setSignalBandwidth(BW);
+  LoRa.setSpreadingFactor(12);
+  LoRa.setSignalBandwidth(67.5E3);
+  LoRa.setTxPower(0, 1);
 }
 
 void displayInfo() {
@@ -86,12 +68,6 @@ void displayInfo() {
   Serial.print(pacchetto.batt);
   Serial.print(" hdop: ");
   Serial.print(pacchetto.h_dop);
-  Serial.print(" n_packSent: ");
-  Serial.print(pacchetto.n_packSent);  
-  Serial.print(" n_packReceived: ");
-  Serial.print(n_packReceived);
-  Serial.print(" PDR: ");
-  Serial.print(PDR);    
   Serial.print(" sec: ");
   Serial.print(pacchetto.sec);
   Serial.print(" id: ");
@@ -111,17 +87,8 @@ void displayInfo() {
   Serial.print(" size: ");
   Serial.print(packetSize);  
   Serial.print(" RSSI:");
-  Serial.print(Rssi);
-  Serial.print(" SNR:");
-  Serial.print(Snr);
-  
+  Serial.print(LoRa.packetRssi());
+
   Serial.println();
   
 }
-
-void serialWrite() {
-      Serial.write((byte *)&buffer_pack, sizeof(pacchetto)); 
-      Serial.write((byte *)&Rssi,2);
-      Serial.write((byte *)&Snr,4);  
-      Serial.write((byte *)&PDR,4);
-  }
