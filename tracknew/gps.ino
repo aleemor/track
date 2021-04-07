@@ -1,7 +1,7 @@
 void GPS_action() {
   if ( isGPShour ) {
     LoRa.sleep();
-    gpsON();                        
+    gpsON();                                   // Accendo il GPS
     getGPS();
     if (gps.location.isUpdated()) {
       setTime();
@@ -57,6 +57,7 @@ void gpsOFF(){
 
 void dataToPack(float lat_f, float lon_f) {
   pacchetto.h_dop = (int)(gps.hdop.hdop()) * 10;
+  EEPROM.put(16,pacchetto.h_dop);
   switch (act_time.hour) {
     case FIX_1:
       pacchetto.lat_1 = (int)(lat_f * 1000);
