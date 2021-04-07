@@ -1,4 +1,4 @@
-  //  Alessandro Moretti
+//  Alessandro Moretti
 //
 // Connessioni:
 //             GPS ----- Arduino           RFM9x ----- Arduino               DS3231 ----- Arduino
@@ -9,7 +9,7 @@
 //             RX  ----- D8                MISO  ----- ICSP 1  ( D12 )         SCL  ----- SCL
 //             EN  ----- D7                MOSI  ----- ICSP 4  ( D11 )         SQW  ----- D2
 //                                         CS    ----- D10
-////
+//
 
 #include "track.h"
 
@@ -20,7 +20,7 @@ void setup() {
 
   aggiorna_count_reboot();
   
-  canc_pack_daEEPROM();
+  //canc_pack_daEEPROM();
 
   pacchetto.id = ID;
 
@@ -30,11 +30,14 @@ void setup() {
 
   clock_initialization();
   LORA_initialization();
+  oled_initialization();
 
   clock.setDateTime(2016, 9, 30, setStartHour, setStartMin, setStartSec);
   
-  delay(1000);
-  Serial.println(F("RTC_SLEEP_GPS_LORA"));
+  delay(100);
+  
+  Serial.println(F("\nRTC_SLEEP_GPS_LORA\n"));
+  
 }
 
 void loop() {
@@ -94,7 +97,7 @@ void interruttori() {
 
 void TurnOFF() {
   if (!isGPShour && !isLORAhour ) {
-
+    gpsOFF();
     Serial.println(F("Dormo."));
     displayInfo();
     delay(100);
