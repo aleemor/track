@@ -47,8 +47,8 @@ int serial_file_descriptor, bytes_read;
 //char serial_port[] = "/dev/cu.usbmodem14201";
 //char serial_port[] = "/dev/cu.usbmodem14101";
 //char serial_port[] = "/dev/cu.usbserial-1410";
-//char serial_port[] = "/dev/ttyACM0";
-char serial_port[] = "/dev/ttyUSB0";
+char serial_port[] = "/dev/ttyACM0";
+//char serial_port[] = "/dev/ttyUSB0";
 
 FILE *fp;
 FILE *frssi;
