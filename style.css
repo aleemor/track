@@ -1,0 +1,100 @@
+body {
+font-family: Arial, Verdana, sans-serif;
+color: #665544;
+}
+
+button{
+width:5em;
+padding: 5px 5px 5px 5px;
+color: #ffffff;
+text-shadow: 1px 1px 1px #000;
+font: 10px Arial, Verdana, sans-serif;
+border: solid thin #882d13;
+-webkit-border-radius: .7em;
+-moz-border-radius: .7em;
+border-radius: .7em;
+-webkit-box-shadow: 2px 2px 3px #999; 
+box-shadow: 2px 2px 3px #bbb; 
+background-image: -webkit-gradient(linear, left top, left bottom, from(#e9ede8), to(#ce401c), color-stop(0.4, #8c10b));
+}
+
+table{
+width: 100%;
+background-color: #ccc;
+}
+
+td{
+background-color: #eee;
+border-color: 1px solid #fff;
+text-align: center;
+}
+
+tr{
+background-color: #ddd;
+}
+
+tr.alternate{
+background-color: #eee;
+}
+
+#Galleria li{
+margin: 5px;
+border: 1px solid #ccc;
+float: left;
+width: 30%;
+list-style: none;
+}
+
+#Galleria li:hover{
+border: 1px solid #777;
+}
+
+#Galleria li img{
+width: 100%;
+height: auto;
+}
+
+#Galleria li div{
+padding: 15px;
+text-align: center;
+}
+
+div#gmaps-canvas{
+width: 995px;
+height: 775px;
+}
+
+.Titolo{
+    background-color:#efefef;
+    margin:20px 0 20px;
+    text-align:center; 
+    font: 40px bold;
+    font-family: Arial, Verdana, sans-serif;
+    padding: 15px;
+}
+
+.topnav{
+background-color: #333;
+overflow: hidden;
+z-index: 1000;
+}
+
+.topnav a{
+float: left;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+}
+
+.topnav a:hover{
+background-color: #ddd;
+color: black;
+}
+
+.topnav a.active{
+background-color: #4CAF50;
+color: white;
+}
+
