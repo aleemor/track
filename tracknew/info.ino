@@ -1,4 +1,7 @@
 void displayInfo(){
+
+  printOled();
+  
  // Serial.print(millis());
  // Serial.print(" ");
   oraRTC();
@@ -19,18 +22,18 @@ void displayInfo(){
   Serial.print(F(" SEND: "));
   Serial.print(LORA_interval);
   Serial.print(F(" n_packSent: "));
-  Serial.print(n_packSent); 
-  Serial.print(" lat_1: ");
+  Serial.print(pacchetto.n_packSent);
+  Serial.print(F(" lat_1: "));
   Serial.print(pacchetto.lat_1);
-  Serial.print(" lon_1: ");
+  Serial.print(F(" lon_1: "));
   Serial.print(pacchetto.lon_1);
-  Serial.print(" lat_2: ");
+  Serial.print(F(" lat_2: "));
   Serial.print(pacchetto.lat_2);
-  Serial.print(" lon_2: ");
+  Serial.print(F(" lon_2: "));
   Serial.print(pacchetto.lon_2);
-  Serial.print(" lat_3: ");
+  Serial.print(F(" lat_3: "));
   Serial.print(pacchetto.lat_3);
-  Serial.print(" lon_3: ");
+  Serial.print(F(" lon_3: "));
   Serial.print(pacchetto.lon_3);     
   /*     
   Serial.print(F(" ID: "));
